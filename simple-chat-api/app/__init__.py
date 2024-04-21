@@ -6,7 +6,6 @@ from app import error_handler
 from model import mongodb
 
 # Routers
-from app.api.auth import auth
 from app.api.template import api as template
 from app.api.v1 import api as api_v1
 
@@ -16,6 +15,8 @@ from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from app import middleware
 
+# Controller
+from controller.websocket import ConnectionManager
 
 def create_app(settings: Settings) -> FastAPI:
     """Application Factory"""
@@ -43,6 +44,7 @@ def create_app(settings: Settings) -> FastAPI:
     )
 
     # Global init
+    app.connection = ConnectionManager()
     app.mongodb_cli = mongodb.get_client(settings.simple_chat_mongodb_uri)
     app.mongodb = app.mongodb_cli[settings.simple_chat_mongodb_db_name]
     app.settings = settings
@@ -71,7 +73,6 @@ def create_app(settings: Settings) -> FastAPI:
 
     # Register Routers
     app.include_router(template)
-    app.include_router(auth, prefix="/api/auth")
     app.include_router(api_v1, prefix='/api/v1')
 
     return app
