@@ -14,15 +14,4 @@ templating = template_engine.TemplateResponse
     tags=['template'],
 )
 async def index(request: Request):
-    """
-    Welcome to IMFast
-    - **author**: IML
-    """
-    return templating(
-        request=request,
-        name='index.html',
-        context={
-            'request': request,
-            'description': request.app.settings.description
-        }
-    )
+    return templating("index.html", {"request": request})

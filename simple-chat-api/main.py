@@ -4,6 +4,7 @@ Application Management Module
 import asyncio
 import click
 from fastapi import FastAPI
+from fastapi.routing import APIWebSocketRoute
 from app import create_app
 from model import mongodb
 from model.mongodb.initializer import ModelInitializer
@@ -35,6 +36,13 @@ def routes():
     name_len = 0
 
     for route in application.routes:
+        if isinstance(route, APIWebSocketRoute):
+            routes.append((
+                route.path, '{WEBSOCKET}', route.name))
+            path_len = max(path_len, len(route.path))
+            method_len = max(method_len, len('WebSocket'))
+            name_len = max(name_len, len(route.name))
+            continue
         routes.append((
             route.path, str(route.methods), route.name))
         path_len = max(path_len, len(route.path))
