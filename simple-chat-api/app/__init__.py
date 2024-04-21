@@ -43,8 +43,8 @@ def create_app(settings: Settings) -> FastAPI:
     )
 
     # Global init
-    app.mongodb_cli = mongodb.get_client(settings.mongodb_uri)
-    app.mongodb = app.mongodb_cli[settings.mongodb_db_name]
+    app.mongodb_cli = mongodb.get_client(settings.simple_chat_mongodb_uri)
+    app.mongodb = app.mongodb_cli[settings.simple_chat_mongodb_db_name]
     app.settings = settings
 
     # Built-in init
