@@ -1,11 +1,12 @@
 import os
+from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 __AUTHOR__ = "IML"
-__VERSION__ = "0.8.1"
+__VERSION__ = "0.0.1"
 
-APP_NAME = "IMFast"
+APP_NAME = "SimpleChat"
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -19,8 +20,8 @@ class Settings(BaseSettings):
     contact_url: str = "https://github.com/iml1111"
     contact_email: str = "shin10256@gmail.com"
     # Documentation url
-    docs_url: str = "/docs"
-    redoc_url: str = "/redoc"
+    docs_url: Optional[str] = None
+    redoc_url: Optional[str] = None
     # JWT settings
     jwt_secret_key: str = "super-secret"
     jwt_algorithm: str = "HS256"
@@ -29,12 +30,11 @@ class Settings(BaseSettings):
     # Slow API settings
     slow_api_time: float = 0.5
     # Mongodb settings
-    mongodb_uri: str = "mongodb://localhost:27017"
-    mongodb_db_name: str = "Imfast"
+    simple_chat_mongodb_uri: str
+    simple_chat_mongodb_db_name: str
     mongodb_api_log: bool = True
 
     model_config = SettingsConfigDict(
-        env_prefix=f"{APP_NAME.upper()}_",
         # default: development env
         env_file=BASE_DIR + '/dev.env',
         env_file_encoding='utf-8',
@@ -44,7 +44,7 @@ class Settings(BaseSettings):
 class TestSettings(Settings):
     """Test Overriding settings"""
     test_mode: bool = True
-    mongodb_db_name: str = "ImfastTestDB"
+    mongodb_db_name: str = "SimpleChatTestDB"
 
     model_config = SettingsConfigDict(
         env_prefix=f"{APP_NAME.upper()}_",

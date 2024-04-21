@@ -23,7 +23,7 @@ async def access_token(
     if not is_access(
         token,
         secret_key=settings.jwt_secret_key,
-        algorithm=settings.algorithm
+        algorithm=settings.jwt_algorithm
     ):
         raise JWTError("Token is access token")
     identity = get_identity(token)

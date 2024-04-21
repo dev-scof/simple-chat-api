@@ -127,4 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-IMFast/.DS_Store
+simple-chat-api/.DS_Store

@@ -10,7 +10,7 @@ templating = template_engine.TemplateResponse
 
 @api.get(
     '/',
-    summary="Welcome to IMFast",
+    summary="Welcome to Simple-Chat-API",
     tags=['template'],
 )
 async def index(request: Request):
