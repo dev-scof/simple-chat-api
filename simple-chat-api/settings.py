@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 __AUTHOR__ = "IML"
-__VERSION__ = "0.8.1"
+__VERSION__ = "0.0.1"
 
 APP_NAME = "SimpleChat"
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
