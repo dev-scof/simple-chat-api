@@ -55,6 +55,8 @@ jobs:
         script: |
           cd simple-chat-api && \
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.IMAGE_REPO }} && \
-          docker rm -f simple-chat-api || true && \
+          docker stop simple-chat-api || true && \
+          docker rm simple-chat-api || true && \
           docker pull ${{ secrets.IMAGE_REPO }}:${{ env.IMAGE_TAG }} && \
-          docker run -d -p 5000:5000 --name simple-chat-api ${{ secrets.IMAGE_REPO }}:${{ env.IMAGE_TAG }}
+          docker run -it -d -p 5000:5000 --name simple-chat-api ${{ secrets.IMAGE_REPO }}:${{ env.IMAGE_TAG }}
+          docker image prune -f
