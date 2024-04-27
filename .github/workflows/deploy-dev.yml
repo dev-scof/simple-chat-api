@@ -41,6 +41,7 @@ jobs:
       id: build-image
       run: |
         docker build -t ${{ secrets.IMAGE_REPO }}:${{ env.IMAGE_TAG }} ./simple-chat-api
+        echo "[Completed] Build Docker Image"
         docker push ${{ secrets.IMAGE_REPO }}:${{ env.IMAGE_TAG }}
 
     - name: Deployment to EC2
