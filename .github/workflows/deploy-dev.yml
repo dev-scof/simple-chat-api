@@ -16,22 +16,22 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Download env file from S3
+      uses: keithweaver/aws-s3-github-action@v1.0.0
+      with:
+        command: cp
+        aws_access_key_id: ${{ secrets.AWS_S3_ACCESS_KEY }}
+        aws_secret_access_key: ${{ secrets.AWS_S3_SECRET_KEY }}
+        aws_region: ${{ secrets.AWS_REGION }}
+        source: ${{ secrets.SIMPLE_CHAT_API_ENV_FILE }}
+        destination: './simple-chat-api/.env'
+
     - name: Configure AWS credentials for ECR
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.ECR_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.ECR_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
-
-    - name: Download env file from S3
-      uses: keithweaver/aws-s3-github-action@v1.0.0
-      with:
-        command: cp
-        aws_access_key_id: ${{ env.AWS_S3_ACCESS_KEY }}
-        aws_secret_access_key: ${{ env.AWS_S3_SECRET_KEY }}
-        aws_region: ${{ env.AWS_REGION }}
-        source: ${{ env.SIMPLE_CHAT_API_ENV_FILE }}
-        destination: './simple-chat-api/.env'
+        aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -46,10 +46,10 @@ jobs:
     - name: Deployment to EC2
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ env.AWS_EC2_SSH_HOST }}
-        port: ${{ env.AWS_EC2_SSH_PORT }}
-        username: ${{ env.AWS_EC2_SSH_USER }}
-        password: ${{ env.AWS_EC2_SSH_PW }}
+        host: ${{ secrets.AWS_EC2_SSH_HOST }}
+        port: ${{ secrets.AWS_EC2_SSH_PORT }}
+        username: ${{ secrets.AWS_EC2_SSH_USER }}
+        password: ${{ secrets.AWS_EC2_SSH_PW }}
 
         script: |
           cd simple-chat-api && \
