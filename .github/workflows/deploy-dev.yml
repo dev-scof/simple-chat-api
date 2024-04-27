@@ -41,7 +41,6 @@ jobs:
       id: build-image
       run: |
         docker build -t ${{ secrets.IMAGE_REPO }}:${{ env.IMAGE_TAG }} ./simple-chat-api
-        echo "[Completed] Build Docker Image"
         docker push ${{ secrets.IMAGE_REPO }}:${{ env.IMAGE_TAG }}
 
     - name: Deployment to EC2
@@ -55,6 +54,7 @@ jobs:
 
         script: |
           cd simple-chat-api && \
+          aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${{ secrets.IMAGE_REPO }} && \
           docker pull ${{ secrets.IMAGE_REPO }}:${{ env.IMAGE_TAG }} && \
           docker rm -f simple-chat-api || true && \
           docker run -d -p 5000:5000 simple-chat-api:0.0.1 -n simple-chat-api
