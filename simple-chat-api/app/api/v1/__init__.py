@@ -8,4 +8,4 @@ api = APIRouter(
     tags=['v1']
 )
 
-from . import sample, sample_model, simple_chat
+from . import sample_model, simple_chat

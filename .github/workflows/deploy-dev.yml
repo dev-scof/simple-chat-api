@@ -6,7 +6,7 @@ on:
 
 env:
   SIMPLE_CHAT_API_IMAGE_REPO: ${{ secrets.IMAGE_REPO }}
-  IMAGE_TAG: 0.0.2
+  IMAGE_TAG: 0.0.3
 
 jobs:
   ci:
