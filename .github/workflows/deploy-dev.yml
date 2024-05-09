@@ -6,7 +6,7 @@ on:
 
 env:
   SIMPLE_CHAT_API_IMAGE_REPO: ${{ secrets.IMAGE_REPO }}
-  IMAGE_TAG: 0.0.3
+  IMAGE_TAG: 0.0.4
 
 jobs:
   ci:
@@ -53,7 +53,6 @@ jobs:
         password: ${{ secrets.AWS_EC2_SSH_PW }}
 
         script: |
-          cd simple-chat-api && \
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.IMAGE_REPO }} && \
           docker stop simple-chat-api || true && \
           docker rm simple-chat-api || true && \
